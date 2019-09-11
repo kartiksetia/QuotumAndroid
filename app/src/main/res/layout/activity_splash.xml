@@ -8,6 +8,4 @@
         android:background="@mipmap/splash"
         tools:context=".SplashActivity">
 
-
-
 </android.support.constraint.ConstraintLayout>

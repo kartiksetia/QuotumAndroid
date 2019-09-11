@@ -1,25 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <include layout="@layout/video_background" />
+    <include layout="@layout/video_background"/>
 
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#80000000">
+                    android:padding="10dp"
+                    android:background="#70000000">
 
-    <ImageView
-            android:id="@+id/image_view_logo"
-            android:layout_width="190dp"
-            android:layout_height="193dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="56dp"
-            android:src="@mipmap/logo"/>
+        <ImageView
+                android:id="@+id/image_view_logo"
+                android:layout_width="125dp"
+                android:layout_height="132dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="56dp"
+                android:src="@mipmap/logo"/>
 
+        <LinearLayout android:id="@+id/linear_layout_fb"
+                      android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:weightSum="2"
+                      android:layout_below="@+id/image_view_logo"
+                      android:layout_marginTop="235dp"
+                      android:layout_height="wrap_content">
 
+            <Button android:id="@+id/fb"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_facebook"
+                    android:background="@drawable/fb_background"
+                    android:text="Facebook"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:paddingLeft="12dp"
+                    android:textColor="#ffffff"
+            />
 
+            <Button android:id="@+id/insta"
+                    android:layout_weight="1"
+                    android:paddingLeft="12dp"
+                    android:drawableLeft="@drawable/ic_instagram"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/insta_background"
+                    android:text="Instagram"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+            />
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/line"
+                android:layout_below="@id/linear_layout_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="18dp"
+                android:background="#FFFFFF"/>
+
+        <Button
+                android:id="@+id/button1"
+                android:layout_below="@+id/line"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textColor="#ffffff"
+                android:textStyle="normal"
+                android:textAllCaps="false"
+                android:background="@drawable/radius_button"
+                android:text="@string/login_button"
+                android:layout_marginTop="1dp"/>
+
+        <LinearLayout android:id="@+id/linear_layout_login"
+                      android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:weightSum="2"
+                      android:gravity="center"
+                      android:layout_below="@+id/button1"
+                      android:layout_alignParentBottom="true"
+                      android:layout_height="wrap_content">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:text="Already have an account ?"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="15dp"
+                      android:textSize="15sp"
+                      android:textStyle="bold"
+                      android:textColor="@color/pink"
+                      android:text="Login Now"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

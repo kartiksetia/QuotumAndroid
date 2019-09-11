@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="pink">#ff6b81</color>
+    <color name="text">#2c3e50</color>
+    <color name="facebook">#3b5998</color>
+    <color name="background">#fafbfd</color>
+
 </resources>
