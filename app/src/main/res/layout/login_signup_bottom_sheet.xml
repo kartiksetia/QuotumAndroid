@@ -11,6 +11,43 @@
               app:behavior_peekHeight="0dp"
               app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+    <LinearLayout android:id="@+id/linear_layout_switch"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+
+        <Button android:id="@+id/login_switch"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_background"
+            android:text="Login"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            />
+
+        <Button android:id="@+id/signup_switch"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SignUp"
+            android:layout_margin="5dp"
+            android:background="@drawable/login_btton_unpressed_background"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            />
+
+    </LinearLayout>
+
+
+
+
     <include layout="@layout/login_layout"/>
+    <include layout="@layout/signup_layout"/>
 
 </LinearLayout>

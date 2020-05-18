@@ -16,12 +16,14 @@
     <string name="email">Email Id</string>
     <string name="passowrd">Password</string>
     <string name="login">Login Now</string>
+    <string name="signup">SignUp</string>
     <string name="show_pwd">Show Password</string>
     <string name="hide_pwd">Hide Password</string>
     <string name="forgot">Forgot password?</string>
     <string name="closebutton">Close Button for Activity</string>
     <string name="newUser">Not a Member yet? Sign Up here.</string>
-    <string name="fullName">Full Name</string>
+    <string name="fullName">First Name</string>
+    <string name="lastName">Last Name</string>
     <string name="mobileNumber">Mobile Number</string>
     <string name="location">Location</string>
     <string name="confirmPassword">Confirm Password</string>
@@ -33,4 +35,17 @@
     <string name="back">BACK</string>
 
     <string name="login_button">"Continue with Email/Mobile"</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>
