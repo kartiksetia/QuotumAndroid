@@ -1,16 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_signup"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp" >
+    android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/login_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -18,15 +19,16 @@
             <EditText
                 android:id="@+id/input_email"
                 android:layout_width="match_parent"
-                android:inputType="textEmailAddress"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:backgroundTint="@color/pink"
-                android:hint="@string/email" />
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textSize="15sp"
+                tools:ignore="Autofill" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_mobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -34,15 +36,16 @@
             <EditText
                 android:id="@+id/input_mobile"
                 android:layout_width="match_parent"
-                android:inputType="phone"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:backgroundTint="@color/pink"
-                android:hint="@string/mobileNumber" />
+                android:hint="@string/mobileNumber"
+                android:inputType="phone"
+                android:textSize="15sp"
+                tools:ignore="Autofill" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -50,15 +53,15 @@
             <EditText
                 android:id="@+id/input_first_name"
                 android:layout_width="match_parent"
-                android:inputType="text"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:backgroundTint="@color/pink"
-                android:hint="@string/fullName" />
+                android:hint="@string/fullName"
+                android:inputType="text"
+                android:textSize="15sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -66,30 +69,32 @@
             <EditText
                 android:id="@+id/input_last_name"
                 android:layout_width="match_parent"
-                android:inputType="textEmailAddress"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:backgroundTint="@color/pink"
-                android:hint="@string/lastName" />
+                android:hint="@string/lastName"
+                android:inputType="textEmailAddress"
+                android:textSize="15sp"
+                tools:ignore="Autofill" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/input_password"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:backgroundTint="@color/pink"
-                android:hint="@string/passowrd" />
+                android:hint="@string/passowrd"
+                android:inputType="textPassword"
+                android:textSize="15sp"
+                tools:ignore="Autofill" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
@@ -99,53 +104,57 @@
             android:layout_marginTop="13dp"
             android:background="@drawable/pink_button_background"
             android:padding="3dp"
-            android:textAllCaps="false"
             android:text="@string/signUp"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
     </LinearLayout>
+
     <View
         android:id="@+id/line"
         android:layout_width="wrap_content"
         android:layout_height="0.5dp"
         android:layout_below="@+id/login_layout"
         android:layout_marginTop="15dp"
-        android:background="#FFFFFF"/>
+        android:background="#FFFFFF" />
 
-    <LinearLayout android:id="@+id/linear_layout_fb"
+    <LinearLayout
+        android:id="@+id/linear_layout_fb"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="2"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/line"
         android:layout_marginTop="15dp"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <Button android:id="@+id/fb"
-            android:layout_weight="1"
+        <Button
+            android:id="@+id/fb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_facebook"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@drawable/fb_background"
-            android:text="Facebook"
-            android:layout_margin="5dp"
+            android:drawableLeft="@drawable/ic_facebook"
             android:gravity="center"
+            android:paddingLeft="12dp"
+            android:text="Facebook"
             android:textAllCaps="false"
-            android:paddingLeft="12dp"
             android:textColor="#ffffff"
-            />
+            tools:ignore="ButtonStyle" />
 
-        <Button android:id="@+id/insta"
-            android:layout_weight="1"
-            android:paddingLeft="12dp"
-            android:drawableLeft="@drawable/ic_instagram"
+        <Button
+            android:id="@+id/insta"
             android:layout_width="wrap_content"
-            android:layout_margin="5dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@drawable/insta_background"
+            android:drawableLeft="@drawable/ic_instagram"
+            android:paddingLeft="12dp"
             android:text="Instagram"
             android:textAllCaps="false"
             android:textColor="#000000"
-            />
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
