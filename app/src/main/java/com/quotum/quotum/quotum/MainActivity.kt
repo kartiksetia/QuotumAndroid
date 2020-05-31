@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.quotum.quotum.quotum.localdatabase.LocalDB
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send
             ), drawerLayout = drawerLayout
         )
-
+        LocalDB.setUserToken(baseContext, null)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

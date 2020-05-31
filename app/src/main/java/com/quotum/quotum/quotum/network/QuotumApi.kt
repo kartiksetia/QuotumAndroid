@@ -13,7 +13,7 @@ interface QuotumApi {
     fun facebookLogin(@Query("code") authCode: String): Call<FacebookResponseModel>
 
     @POST("/api/users/socialLogin")
-    fun socialLogin(@Query("access_token") authCode: String): Call<FacebookResponseModel>
+    fun socialLogin(@Query("access_token") authCode: String, @Body login: SocialLoginRequestModel) : Call<SocialLoginResponseModel>
 
 
     @POST("/api/customerQueries")
