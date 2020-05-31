@@ -66,13 +66,7 @@ public class LoginActivity : AppCompatActivity(), View.OnClickListener, Authenti
         )
         setContentView(R.layout.activity_login)
 
-        userToken = LocalDB.getUserToken(CONTEXT)
-
-        if (userToken != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        checkIfUserIsAlreadyLoggedin()
 
         val buttonFbParent = findViewById<Button>(R.id.fb)
         val buttonInstaParent = findViewById<Button>(R.id.insta)
@@ -155,6 +149,16 @@ public class LoginActivity : AppCompatActivity(), View.OnClickListener, Authenti
 
         buttonLogin.setOnClickListener {
             loginWithEmailandPassword()
+        }
+    }
+
+    private fun checkIfUserIsAlreadyLoggedin() {
+        userToken = LocalDB.getUserToken(CONTEXT)
+
+        if (userToken != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
