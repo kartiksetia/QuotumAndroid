@@ -48,4 +48,13 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <string name="facebook_app_id">2074930896143637</string>
+    <string name="fb_login_protocol_scheme">fb2074930896143637</string>
+
+    <string name="client_id">your_client_id</string>
+    <string name="redirect_url">https://instagram.com/</string>
+    <string name="base_url">https://api.instagram.com/</string>
+    <string name="get_user_info_url">https://api.instagram.com/v1/users/self/?access_token=</string>
+
 </resources>
