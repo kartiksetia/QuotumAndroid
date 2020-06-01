@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
  class TripAdapter : RecyclerView.Adapter<TripAdapter.TripViewHolder>() {
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_trip, parent, false)
         return TripViewHolder(view)

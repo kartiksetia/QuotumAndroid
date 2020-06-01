@@ -1,4 +1,4 @@
-package com.example.quotum.ui.slideshow
+package com.quotum.quotum.quotum.ui.slideshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

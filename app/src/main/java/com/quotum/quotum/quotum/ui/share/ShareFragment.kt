@@ -1,4 +1,4 @@
-package com.example.quotum.ui.share
+package com.quotum.quotum.quotum.ui.share
 
 import android.os.Bundle
 import android.view.LayoutInflater

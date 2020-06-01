@@ -1,4 +1,4 @@
-package com.example.quotum.ui.share
+package com.quotum.quotum.quotum.ui.share
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

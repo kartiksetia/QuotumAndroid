@@ -16,14 +16,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/pink"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-        layout="@layout/content_main"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="194dp" />
+        layout="@layout/content_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
