@@ -1,4 +1,4 @@
-package com.example.quotum.ui.tools
+package com.quotum.quotum.quotum.ui.tools
 
 import android.os.Bundle
 import android.view.LayoutInflater
