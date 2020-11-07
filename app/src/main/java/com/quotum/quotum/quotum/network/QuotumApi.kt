@@ -41,7 +41,8 @@ interface QuotumApi {
     fun getTripByLocation(
         @Query("lat") lat: Double,
         @Query("lng") lng: Double,
-        @Query("distance") distance: Int
+        @Query("distance") distance: Int,
+        @Query("access_token") token: String
     ): Call<GetTripLocationResponseModel>
 
     @GET("/api/users/{id}")
