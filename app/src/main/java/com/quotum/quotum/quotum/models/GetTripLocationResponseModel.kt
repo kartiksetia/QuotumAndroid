@@ -180,11 +180,11 @@ class GetTripLocationResponseModel {
     class Location {
         @SerializedName("lat")
         @Expose
-        var lat: Int? = null
+        var lat: Float? = null
 
         @SerializedName("lng")
         @Expose
-        var lng: Int? = null
+        var lng: Float? = null
 
     }
 

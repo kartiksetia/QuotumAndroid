@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -46,7 +47,6 @@ class HomeFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
         recyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         recyclerView.adapter = TripAdapter()
-
         getNearByTrips()
         return root
     }
@@ -60,22 +60,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun getTrips(){
-        context?.let {
-            LocalDB.getUserToken(it)?.let {
-                QuotumClient.instance.getTripByLocation(latitude,longitude,10, it)
-                    .enqueue(object : Callback<GetTripLocationResponseModel>{
-                        override fun onFailure(call: Call<GetTripLocationResponseModel>, t: Throwable) {
 
-                        }
+        val token: String? = context?.let { LocalDB.getUserToken(it) }
 
-                        override fun onResponse(call: Call<GetTripLocationResponseModel>, response: Response<GetTripLocationResponseModel>) {
-                            if(response.isSuccessful){
-                                val tripLocationResponseModel : GetTripLocationResponseModel = response.body()!!
-                                val kk : String = tripLocationResponseModel.getResult().toString()
-                            }
+        if (token != null) {
+            QuotumClient.instance.getTripByLocation(latitude,longitude,10, token)
+                .enqueue(object : Callback<GetTripLocationResponseModel>{
+                    override fun onFailure(call: Call<GetTripLocationResponseModel>, t: Throwable) {
+                        Toast.makeText(context,t.localizedMessage,Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onResponse(call: Call<GetTripLocationResponseModel>, response: Response<GetTripLocationResponseModel>) {
+                        if(response.isSuccessful){
+                            val tripLocationResponseModel : GetTripLocationResponseModel = response.body()!!
+                            val kk : String = tripLocationResponseModel.getResult().toString()
                         }
-                    })
-            }
+                    }
+                })
         }
     }
 
