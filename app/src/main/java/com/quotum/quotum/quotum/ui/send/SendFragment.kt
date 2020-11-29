@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.quotum.quotum.quotum.R
+import com.quotum.quotum.quotum.localdatabase.LocalDB
 
 class SendFragment : Fragment() {
 
@@ -22,10 +23,8 @@ class SendFragment : Fragment() {
         sendViewModel =
             ViewModelProviders.of(this).get(SendViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_send, container, false)
-        val textView: TextView = root.findViewById(R.id.text_send)
-        sendViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        context?.let { LocalDB.setUserToken(it,null) }
+        activity?.finish()
         return root
     }
 }

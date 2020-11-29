@@ -39,14 +39,15 @@ class HomeFragment : Fragment() {
     private lateinit var locationCallback: LocationCallback
     private var latitude : Double = 0.0
     private var longitude : Double = 0.0
+    private lateinit var recyclerView : RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val recyclerView = root.findViewById<RecyclerView>(R.id.rvTrip)
+        recyclerView = root.findViewById(R.id.rvTrip)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
-        recyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-        recyclerView.adapter = TripAdapter()
+        recyclerView.layoutManager= GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+
         getNearByTrips()
         return root
     }
@@ -73,7 +74,7 @@ class HomeFragment : Fragment() {
                     override fun onResponse(call: Call<GetTripLocationResponseModel>, response: Response<GetTripLocationResponseModel>) {
                         if(response.isSuccessful){
                             val tripLocationResponseModel : GetTripLocationResponseModel = response.body()!!
-                            val kk : String = tripLocationResponseModel.getResult().toString()
+                            recyclerView.adapter = TripAdapter(tripLocationResponseModel)
                         }
                     }
                 })
