@@ -1,4 +1,4 @@
-package com.quotum.quotum.quotum.ui.home
+package com.quotum.quotum.quotum.ui.searchTrip
 
 import android.Manifest
 import android.app.AlertDialog
@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
 import com.quotum.quotum.quotum.R
-import com.quotum.quotum.quotum.TripAdapter
 import com.quotum.quotum.quotum.localdatabase.LocalDB
 import com.quotum.quotum.quotum.models.GetTripLocationResponseModel
 import com.quotum.quotum.quotum.network.QuotumClient
@@ -31,9 +30,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class HomeFragment : Fragment() {
+class SearchTripFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var searchTripViewModel: SearchTripViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
@@ -42,7 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView : RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        searchTripViewModel = ViewModelProviders.of(this).get(SearchTripViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         recyclerView = root.findViewById(R.id.rvTrip)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
@@ -74,7 +73,10 @@ class HomeFragment : Fragment() {
                     override fun onResponse(call: Call<GetTripLocationResponseModel>, response: Response<GetTripLocationResponseModel>) {
                         if(response.isSuccessful){
                             val tripLocationResponseModel : GetTripLocationResponseModel = response.body()!!
-                            recyclerView.adapter = TripAdapter(tripLocationResponseModel)
+                            recyclerView.adapter =
+                                TripAdapter(
+                                    tripLocationResponseModel
+                                )
                         }
                     }
                 })

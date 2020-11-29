@@ -9,9 +9,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@drawable/nature"
         android:layout_height="230dp">
 
+        <ImageView
+            android:id="@+id/image_view_background"
+            android:layout_width="match_parent"
+            android:src="@drawable/nature"
+            android:layout_height="230dp"></ImageView>
         <TextView
             android:id="@+id/text_view_cost"
             android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.quotum.quotum.quotum.ui.slideshow
+package com.quotum.quotum.quotum.ui.myProfile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,20 +11,20 @@ import androidx.lifecycle.ViewModelProviders
 import com.quotum.quotum.quotum.R
 
 
-class SlideshowFragment : Fragment() {
+class MyProfileFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: SlideshowViewModel
+    private lateinit var myProfileViewModel: MyProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
-            ViewModelProviders.of(this).get(SlideshowViewModel::class.java)
+        myProfileViewModel =
+            ViewModelProviders.of(this).get(MyProfileViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
         val textView: TextView = root.findViewById(R.id.text_slideshow)
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
+        myProfileViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
