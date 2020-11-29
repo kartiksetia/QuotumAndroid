@@ -9,11 +9,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@drawable/nature"
         android:layout_height="230dp">
 
+        <ImageView
+            android:id="@+id/image_view_background"
+            android:layout_width="match_parent"
+            android:src="@drawable/nature"
+            android:layout_height="230dp"></ImageView>
         <TextView
-            android:id="@+id/dollar"
+            android:id="@+id/text_view_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_dollar"
@@ -35,17 +39,17 @@
                 android:layout_height="10dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_fiber_manual_record_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv1"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_from"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv1" />
+                app:layout_constraintTop_toTopOf="@id/text_view_from" />
 
             <TextView
-                android:id="@+id/tv1"
+                android:id="@+id/text_view_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginLeft="2dp"
-                android:text="wigan"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/i1"
@@ -72,10 +76,10 @@
                 app:layout_constraintTop_toBottomOf="@id/i1" />
 
             <TextView
-                android:id="@+id/tv2"
+                android:id="@+id/text_view_destination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Halifax"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
                 android:visibility="visible"
@@ -84,11 +88,11 @@
                 app:layout_constraintTop_toTopOf="@id/i2" />
 
             <TextView
-                android:id="@+id/t3"
+                android:id="@+id/textview_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="Mon, 23 May, 2019"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,17 +106,17 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="@id/t3"
-                app:layout_constraintStart_toEndOf="@id/t3"
-                app:layout_constraintTop_toTopOf="@id/t3" />
+                app:layout_constraintBottom_toBottomOf="@id/textview_date"
+                app:layout_constraintStart_toEndOf="@id/textview_date"
+                app:layout_constraintTop_toTopOf="@id/textview_date" />
 
             <TextView
-                android:id="@+id/tv4"
+                android:id="@+id/textview_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="7:00 AM"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="13dp"
                 app:layout_constraintBottom_toBottomOf="@id/v2"
@@ -120,18 +124,17 @@
                 app:layout_constraintTop_toTopOf="@id/v2" />
 
             <TextView
-                android:id="@+id/tv5"
+                android:id="@+id/textview_vehicle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:drawableStart="@drawable/ic_person_pin_circle_black_24dp"
                 android:drawableLeft="@drawable/ic_person_pin_circle_black_24dp"
                 android:drawablePadding="2dp"
-                android:text="Car"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="@id/t3"
-                app:layout_constraintTop_toBottomOf="@id/t3" />
+                app:layout_constraintStart_toStartOf="@id/textview_date"
+                app:layout_constraintTop_toBottomOf="@id/textview_date" />
 
             <View
                 android:id="@+id/v3"
@@ -140,9 +143,9 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="@id/tv5"
-                app:layout_constraintStart_toEndOf="@id/tv5"
-                app:layout_constraintTop_toTopOf="@id/tv5" />
+                app:layout_constraintBottom_toBottomOf="@id/textview_vehicle"
+                app:layout_constraintStart_toEndOf="@id/textview_vehicle"
+                app:layout_constraintTop_toTopOf="@id/textview_vehicle" />
 
             <TextView
                 android:id="@+id/tv6"
@@ -153,7 +156,7 @@
                 android:drawableStart="@drawable/ic_person_pin_circle_black_24dp"
                 android:drawableLeft="@drawable/ic_person_pin_circle_black_24dp"
                 android:drawablePadding="2dp"
-                android:text="1m &amp; 1F"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/v3"

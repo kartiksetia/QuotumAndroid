@@ -68,9 +68,17 @@ class GetTripLocationResponseModel {
         @Expose
         private var userId: String? = null
 
+        @SerializedName("currency")
+        @Expose
+        private var currency: String? = null
+
         @SerializedName("id")
         @Expose
         private var id: String? = null
+
+        @SerializedName("pictures")
+        @Expose
+        private var picture: List<String>? = null
 
         fun getLocation(): Location? {
             return location
@@ -78,6 +86,23 @@ class GetTripLocationResponseModel {
 
         fun setLocation(location: Location?) {
             this.location = location
+        }
+
+
+        fun getPicture():  List<String>? {
+            return picture
+        }
+
+        fun setPicture(picture:  List<String>?) {
+            this.picture = picture
+        }
+
+        fun getCurrency(): String? {
+            return currency
+        }
+
+        fun setCurrency(currency: String?) {
+            this.currency = currency
         }
 
         fun getSource(): String? {
@@ -180,11 +205,11 @@ class GetTripLocationResponseModel {
     class Location {
         @SerializedName("lat")
         @Expose
-        var lat: Int? = null
+        var lat: Float? = null
 
         @SerializedName("lng")
         @Expose
-        var lng: Int? = null
+        var lng: Float? = null
 
     }
 
