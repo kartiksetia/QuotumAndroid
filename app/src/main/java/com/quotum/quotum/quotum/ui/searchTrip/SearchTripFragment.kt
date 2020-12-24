@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -39,14 +40,19 @@ class SearchTripFragment : Fragment() {
     private var latitude : Double = 0.0
     private var longitude : Double = 0.0
     private lateinit var recyclerView : RecyclerView
+    private lateinit var emptyTripView : LinearLayout
+    private lateinit var loadingView : LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         searchTripViewModel = ViewModelProviders.of(this).get(SearchTripViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         recyclerView = root.findViewById(R.id.rvTrip)
+        emptyTripView = root.findViewById(R.id.ll_empty_list)
+        loadingView = root.findViewById(R.id.ll_load_trip)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
         recyclerView.layoutManager= GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-
+        hideEmptyListView()
+        showLoadingView()
         getNearByTrips()
         return root
     }
@@ -59,6 +65,22 @@ class SearchTripFragment : Fragment() {
         }
     }
 
+    private fun showEmptyListView(){
+        emptyTripView.visibility = View.VISIBLE
+    }
+
+    private fun hideEmptyListView(){
+        emptyTripView.visibility = View.INVISIBLE
+    }
+
+    private fun showLoadingView(){
+        loadingView.visibility = View.VISIBLE
+    }
+
+    private fun hideLoadingView(){
+        loadingView.visibility = View.INVISIBLE
+    }
+
     private fun getTrips(){
 
         val token: String? = context?.let { LocalDB.getUserToken(it) }
@@ -67,7 +89,9 @@ class SearchTripFragment : Fragment() {
             QuotumClient.instance.getTripByLocation(latitude,longitude,10, token)
                 .enqueue(object : Callback<GetTripLocationResponseModel>{
                     override fun onFailure(call: Call<GetTripLocationResponseModel>, t: Throwable) {
-                        Toast.makeText(context,t.localizedMessage,Toast.LENGTH_SHORT).show()
+                        showEmptyListView()
+                        hideLoadingView()
+
                     }
 
                     override fun onResponse(call: Call<GetTripLocationResponseModel>, response: Response<GetTripLocationResponseModel>) {
@@ -77,6 +101,8 @@ class SearchTripFragment : Fragment() {
                                 TripAdapter(
                                     tripLocationResponseModel
                                 )
+                            hideLoadingView()
+                            hideEmptyListView()
                         }
                     }
                 })
