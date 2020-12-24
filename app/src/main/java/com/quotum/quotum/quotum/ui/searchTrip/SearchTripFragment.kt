@@ -97,12 +97,19 @@ class SearchTripFragment : Fragment() {
                     override fun onResponse(call: Call<GetTripLocationResponseModel>, response: Response<GetTripLocationResponseModel>) {
                         if(response.isSuccessful){
                             val tripLocationResponseModel : GetTripLocationResponseModel = response.body()!!
-                            recyclerView.adapter =
-                                TripAdapter(
-                                    tripLocationResponseModel
-                                )
-                            hideLoadingView()
-                            hideEmptyListView()
+                            if (tripLocationResponseModel.getResult()?.isEmpty() == true){
+                                hideLoadingView()
+                                showEmptyListView()
+                            }else{
+                                recyclerView.adapter =
+                                    TripAdapter(
+                                        tripLocationResponseModel
+                                    )
+                                hideLoadingView()
+                                hideEmptyListView()
+                            }
+
+
                         }
                     }
                 })
@@ -146,23 +153,26 @@ class SearchTripFragment : Fragment() {
         locationRequest = LocationRequest()
         locationRequest.interval = 50000
         locationRequest.fastestInterval = 50000
-        locationRequest.smallestDisplacement = 170f //170 m = 0.1 mile
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //according to your app
+        locationRequest.smallestDisplacement = 170f
+        locationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 if (locationResult.locations.isNotEmpty()) {
-                    /*val location = locationResult.lastLocation
-                    Log.e("location", location.toString())*/
                     val addresses: List<Address>?
                     val geoCoder = Geocoder(activity?.applicationContext, Locale.getDefault())
+                    latitude = locationResult.lastLocation.latitude
+                    longitude = locationResult.lastLocation.longitude
+
+                    if(latitude == 0.0){
+                        return
+                    }
                     addresses = geoCoder.getFromLocation(
                         locationResult.lastLocation.latitude,
                         locationResult.lastLocation.longitude,
                         1
                     )
-                    latitude = locationResult.lastLocation.latitude
-                    longitude = locationResult.lastLocation.longitude
+
                     getTrips()
                     if (addresses != null && addresses.isNotEmpty()) {
                         val address: String = addresses[0].getAddressLine(0)
