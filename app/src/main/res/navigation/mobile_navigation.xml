@@ -14,9 +14,9 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.quotum.quotum.quotum.ui.gallery.GalleryFragment"
+        android:name="com.quotum.quotum.quotum.ui.postTrip.PostTripFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_posttrip" />
 
     <fragment
         android:id="@+id/nav_slideshow"
