@@ -13,7 +13,7 @@ interface QuotumApi {
     fun facebookLogin(@Query("code") authCode: String): Call<FacebookResponseModel>
 
     @POST("/api/users/socialLogin")
-    fun socialLogin(@Query("access_token") authCode: String): Call<FacebookResponseModel>
+    fun socialLogin(@Query("access_token") authCode: String, @Body login: SocialLoginRequestModel) : Call<SocialLoginResponseModel>
 
 
     @POST("/api/customerQueries")
@@ -39,9 +39,10 @@ interface QuotumApi {
 
     @GET("/api/trips/getTrips")
     fun getTripByLocation(
-        @Query("lat") lat: String,
-        @Query("lng") lng: String,
-        @Query("distance") distance: String
+        @Query("lat") lat: Double,
+        @Query("lng") lng: Double,
+        @Query("distance") distance: Int,
+        @Query("access_token") token: String
     ): Call<GetTripLocationResponseModel>
 
     @GET("/api/users/{id}")

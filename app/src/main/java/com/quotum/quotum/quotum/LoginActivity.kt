@@ -1,13 +1,15 @@
 package com.quotum.quotum.quotum
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +20,7 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.FacebookSdk.getApplicationContext
+import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -25,9 +28,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.quotum.quotum.quotum.localdatabase.LocalDB
 import com.quotum.quotum.quotum.models.LoginRequestModel
 import com.quotum.quotum.quotum.models.LoginResponseModel
+import com.quotum.quotum.quotum.models.SocialLoginRequestModel
+import com.quotum.quotum.quotum.models.SocialLoginResponseModel
 import com.quotum.quotum.quotum.network.QuotumClient
 import com.quotum.quotum.quotum.ui.instagram.AuthenticationListener
 import com.quotum.quotum.quotum.ui.instagram.dialog.AuthenticationDialog
+import com.quotum.quotum.quotum.utility.Utils
 import org.apache.http.HttpEntity
 import org.apache.http.HttpResponse
 import org.apache.http.client.HttpClient
@@ -40,6 +46,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.util.*
 
 
@@ -66,13 +74,7 @@ public class LoginActivity : AppCompatActivity(), View.OnClickListener, Authenti
         )
         setContentView(R.layout.activity_login)
 
-        userToken = LocalDB.getUserToken(CONTEXT)
-
-        if (userToken != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        checkIfUserIsAlreadyLoggedin()
 
         val buttonFbParent = findViewById<Button>(R.id.fb)
         val buttonInstaParent = findViewById<Button>(R.id.insta)
@@ -158,32 +160,62 @@ public class LoginActivity : AppCompatActivity(), View.OnClickListener, Authenti
         }
     }
 
+    private fun checkIfUserIsAlreadyLoggedin() {
+        userToken = LocalDB.getUserToken(CONTEXT)
+
+        if (userToken != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     private fun loginWithEmailandPassword() {
         val email = editTextEmail?.text.toString().trim()
         val password = editTextPassword?.text.toString().trim()
 
-        if(email.isEmpty()){
+        if(email.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"enter email address",Toast.LENGTH_SHORT).show();
             return
-        }
-        if(password.isEmpty()){
-            return
-        }
+        }else {
+            if (Utils.isValidEmail(email)) {
+                if(password.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please Enter Password", Toast.LENGTH_SHORT).show();
+                    return
+                }else{
+                    val loginRequestModel = LoginRequestModel();
+                    loginRequestModel.setEmail(email)
+                    loginRequestModel.setPassword(password)
+                    QuotumClient.instance.emailLogin(loginRequestModel)
+                        .enqueue(object: Callback<LoginResponseModel> {
+                            override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {
+                                Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
+                            }
+                            override fun onResponse(call: Call<LoginResponseModel>, response: Response<LoginResponseModel>) {
+                                if(response.isSuccessful){
+                                    val loginResponseModel : LoginResponseModel = response.body()!!
+                                    LocalDB.setUserToken(applicationContext, loginResponseModel.result!!.id)
+                                    val intent  = Intent(applicationContext, MainActivity::class.java)
+                                    startActivity(intent)
+                                }else{
+                                    when (response.code()) {
+                                        404 -> Toast.makeText(applicationContext, "User not found. Please Signup or check your email.", Toast.LENGTH_SHORT).show()
+                                        500 -> Toast.makeText(applicationContext, "server is not responding right now. Please try again later", Toast.LENGTH_SHORT).show()
+                                        else -> Toast.makeText(applicationContext,
+                                            "Unknown error.Please try again later",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
 
-        val loginRequestModel = LoginRequestModel();
-        loginRequestModel.setEmail(email)
-        loginRequestModel.setPassword(password)
-        QuotumClient.instance.emailLogin(loginRequestModel)
-            .enqueue(object: Callback<LoginResponseModel> {
-                override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {
-                    Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
+                            }
+                        })
                 }
-                override fun onResponse(call: Call<LoginResponseModel>, response: Response<LoginResponseModel>) {
-                    val loginResponseModel : LoginResponseModel = response.body()!!
-                    LocalDB.setUserToken(applicationContext, loginResponseModel.result!!.id)
-                    val intent  = Intent(applicationContext, MainActivity::class.java)
-                    startActivity(intent)
-                }
-            })
+            } else {
+                Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+                return
+            }
+        }
     }
 
     private fun hideSystemUI() {
@@ -227,12 +259,26 @@ public class LoginActivity : AppCompatActivity(), View.OnClickListener, Authenti
             callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
-                    val token = loginResult.accessToken.token
-                    LocalDB.setUserToken(CONTEXT, token)
+                    val request = GraphRequest.newMeRequest(loginResult.accessToken) { `object`, response ->
+                        try {
+                            if (`object`.has("id")) {
+                                signInWithFacebook(`object`, loginResult.accessToken.token)
+                            } else {
+                                Toast.makeText(applicationContext, "User not found. Please Signup or check your email.", Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    val parameters = Bundle()
+                    parameters.putString("fields", "id,name,link,birthday,picture,email,gender");
+                    request.parameters = parameters
+                    request.executeAsync()
                 }
 
                 override fun onCancel() {
                     Log.d(TAG, "Facebook Login is Canceled.")
+                    Toast.makeText(getApplicationContext(),"Facebook Login is Canceled.", Toast.LENGTH_SHORT).show();
                 }
 
                 override fun onError(error: FacebookException) {
@@ -240,9 +286,38 @@ public class LoginActivity : AppCompatActivity(), View.OnClickListener, Authenti
                         TAG,
                         Objects.requireNonNull(error.localizedMessage)
                     )
+                    Toast.makeText(getApplicationContext(),"Facebook Login Error. Please try again.", Toast.LENGTH_SHORT).show();
                 }
             })
 
+    }
+
+    private fun signInWithFacebook(jsonObject: JSONObject, token: String) {
+        val socialLoginRequestModel = SocialLoginRequestModel(jsonObject,"facebook")
+        QuotumClient.instance.socialLogin(token,socialLoginRequestModel)
+            .enqueue(object: Callback<SocialLoginResponseModel> {
+                override fun onFailure(call: Call<SocialLoginResponseModel>, t: Throwable) {
+                    Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
+                }
+                override fun onResponse(call: Call<SocialLoginResponseModel>, response: Response<SocialLoginResponseModel>) {
+                    if(response.isSuccessful){
+                        val loginResponseModel : SocialLoginResponseModel = response.body()!!
+                        LocalDB.setUserToken(applicationContext, loginResponseModel.result!!.id)
+                        val intent  = Intent(applicationContext, MainActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        when (response.code()) {
+                            404 -> Toast.makeText(applicationContext, "User not found. Please Signup or check your email.", Toast.LENGTH_SHORT).show()
+                            500 -> Toast.makeText(applicationContext, "server is not responding right now. Please try again later", Toast.LENGTH_SHORT).show()
+                            else -> Toast.makeText(applicationContext,
+                                "Unknown error.Please try again later",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                }
+            })
     }
 
     internal class RequestInstagramAPI(
