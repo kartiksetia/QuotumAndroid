@@ -30,7 +30,7 @@ class TripAdapter(var data : GetTripLocationResponseModel) : RecyclerView.Adapte
         holder.textViewCost.text = data.getResult()?.get(position)?.getBudget().toString() +  data.getResult()?.get(position)?.getCurrency().toString()
         holder.textViewVehicle.text = data.getResult()?.get(position)?.getModeOfTransport().toString()
         holder.textViewDate.text = data.getResult()?.get(position)?.getStartDate().toString()
-        holder.textViewTime.text = data.getResult()?.get(position)?.getDays().toString() + "-days"
+        holder.textViewTime.text = data.getResult()?.get(position)?.getDays().toString() + "days"
         Picasso.with(mContext)
             .load(data.getResult()?.get(position)?.getPicture()?.get(0)).fit()
             .centerInside()
