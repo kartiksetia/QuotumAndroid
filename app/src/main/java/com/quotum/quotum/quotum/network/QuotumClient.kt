@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object QuotumClient {
-    private val BASE_URL = "http://3.13.221.65:3000"
+    private val BASE_URL = "http://api.quotumapp.com:3000"
 
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(40, TimeUnit.SECONDS)
